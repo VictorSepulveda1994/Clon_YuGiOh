@@ -1,8 +1,14 @@
 const config = {
-    width: 1200,
-    height: 600,
-    parent: "contenedor",
-    type: Phaser.AUTO
+    width: 1280,
+    height: 720,
+    
+    type: Phaser.AUTO,
+    scale: {
+        parent: "contenedor",
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        mode: Phaser.Scale.FIT,
+    },
+    scene: [Tablero]
 }
 
 var game = new Phaser.Game(config);
