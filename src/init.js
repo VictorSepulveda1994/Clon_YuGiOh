@@ -1,8 +1,12 @@
-const config = {
-    width: 1200,
+var config = {
+    
+    type: Phaser.AUTO,
+    width: 800,
     height: 600,
-    parent: "contenedor",
-    type: Phaser.AUTO
-}
+    parent: 'container',
+    scene: [Presentacion, Menu]
+};
+
 
 var game = new Phaser.Game(config);
+
