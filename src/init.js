@@ -1,7 +1,7 @@
 var configuracion = 
 {
     type: Phaser.AUTO,
-    width: 800,
+    width: 900,
     height: 600,
     parent: "container",
     scale:
@@ -15,4 +15,4 @@ var configuracion =
 var game = new Phaser.Game(configuracion);
 game.scene.add('Presentacion', Presentacion);
 game.scene.add('menu', Menu);
-game.scene.start('presentacion');
+game.scene.start('menu');
