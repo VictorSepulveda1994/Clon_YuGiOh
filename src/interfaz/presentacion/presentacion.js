@@ -5,8 +5,6 @@ class Presentacion extends Phaser.Scene
         super({key: "presentacion"});
     }
     
-    
-    
     preload ()
     {
         this.load.image('logo', 'assets/logo.png');
@@ -15,9 +13,7 @@ class Presentacion extends Phaser.Scene
 
     create ()
     {
-        var logoImagen = this.add.image(400, 250, 'logo').setInteractive();
-        logoImagen.on('pointerdown',()=>{this.scene.start(Menu)})
-
+        var logoImagen = this.add.image(400, 250, 'logo');
         
         var text = this.add.text(80, 550, '', { font: '16px Courier', fill: '#ffffff' });
             text.setText

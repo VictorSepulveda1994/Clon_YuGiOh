@@ -1,21 +1,22 @@
-
-
-export default class Game extends Phaser.Scene {
-    constructor() {
-        super({
-            key: 'Game'
-        });
+class Game extends Phaser.Scene 
+{
+    constructor() 
+    {
+        super({key: 'Game'});
     }
 
-    preload() {
+    preload() 
+    {
         
     }
 
-    create() {
+    create() 
+    {
         
     }
 
-    update() {
+    update() 
+    {
 
     }
 }

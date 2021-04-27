@@ -5,23 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clón Yu Gi Oh!</title>
+    <script src="./node_modules/phaser/dist/phaser.js" ></script>
+    <script src="./src/interfaz/presentacion/presentacion.js"></script>
+    <script src="./src/interfaz/menu/menu.js"></script>
+    <script src="./src/init.js"></script>
     <style>
-        main {
-            width: 100%;
+        html,
+        body {
+          margin: 0 auto;
+          padding: 0;
+          width: 100%;
         }
-        #contenedor {
-            margin-top: 15px;
-            align-content: center;
+    
+        #game {
+          margin: 10px auto;
+          padding: 0;
+          width: auto;
+          height: auto;
         }
-    </style>
+      </style>
 </head>
 <body>
     <main>
         <div id="container"></div>
     </main>
-    <script src="./node_modules/phaser/dist/phaser.js" ></script>
-    <script src="./src/interfaz/presentacion/presentacion.js" type:"module"></script>
-    <script src="./src/interfaz/menu/menu.js" type:"module"></script>
-    <script src="./src/init.js" type:"module"></script>
+    
 </body>
 </html>
