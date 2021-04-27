@@ -4,15 +4,18 @@ class Menu extends Phaser.Scene
     {
         this.sprites = [];
         this.load.image('particula', 'assets/red.png');
-        this.load.image('jugar', 'assets/play.png');
-        this.load.image('carta', 'assets/crearCarta.png');
-        this.load.image('mazo', 'assets/crearMazo.png');
+        this.load.image('Jugar', 'assets/play.png');
+        this.load.image('Crear carta', 'assets/crearCarta.png');
+        this.load.image('Crear mazo', 'assets/crearMazo.png');
         //this.load.image('donuts', 'assets/pics/donuts.jpg');
         //this.load.image('fork', 'assets/sprites/fork.png');
     }
 
     create ()
     {
+
+        
+
         //Particulas del fondo
         for (var i = 0; i < 300; i++)
         {
@@ -26,6 +29,26 @@ class Menu extends Phaser.Scene
 
             this.sprites.push({ s: image, r: 4 + Math.random() * 9 });
         }
+
+        var label = this.add.text(0, 0, '', { font: "48px Arial Black", fill: "#c51b7d" });
+
+        var jugar= this.add.image(200, 270,'Jugar').setScale(0.2);
+        var crearCarta= this.add.image(450, 310,'Crear carta').setScale(0.7);
+        var crearMazo= this.add.image(700, 290,'Crear mazo').setScale(0.5);
+        var zone1 = this.add.zone(0, 200, 345, 300).setOrigin(0).setName('Jugar').setInteractive();
+        var zone2 = this.add.zone(345, 200, 310, 300).setOrigin(0).setName('Crear carta').setInteractive();
+        var zone3 = this.add.zone(655, 200, 369, 300).setOrigin(0).setName('Crear mazo').setInteractive();
+
+        this.input.on('gameobjectdown', function (pointer, gameObject) {
+
+            fork.x = pointer.x;
+            fork.y = pointer.y;
+
+            label.setText(gameObject.name);
+            label.x = gameObject.x;
+            label.y = gameObject.y;
+
+        });
         /*  Mmm, donuts
         this.add.image(0, 0, 'donuts').setOrigin(0);
 
