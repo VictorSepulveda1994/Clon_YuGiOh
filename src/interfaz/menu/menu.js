@@ -7,6 +7,7 @@ class Menu extends Phaser.Scene
         this.load.image('Jugar', 'assets/play.png');
         this.load.image('Crear carta', 'assets/crearCarta.png');
         this.load.image('Crear mazo', 'assets/crearMazo.png');
+        this.load.image('puntero', 'assets/copihue.png');
         //this.load.image('donuts', 'assets/pics/donuts.jpg');
         //this.load.image('fork', 'assets/sprites/fork.png');
     }
@@ -27,22 +28,29 @@ class Menu extends Phaser.Scene
             //image.setBlendMode(Phaser.BlendModes.OVERLAY);
             //image.setBlendMode(Phaser.BlendModes.ADD);
 
-            this.sprites.push({ s: image, r: 4 + Math.random() * 9 });
+            this.sprites.push({ s: image, r: 7 + Math.random() * 14 });
         }
 
-        var label = this.add.text(0, 0, '', { font: "48px Arial Black", fill: "#c51b7d" });
+        var punteroIcon = this.add.image(1024, 600, 'puntero').setOrigin(0.5, 0).setAngle(-20).setScale(0.2);
+        var label = this.add.text(0, 0, '', { font: "24px Arial Black", fill: "#c51b7d" });
+        label.setStroke('#de77ae', 8);
 
         var jugar= this.add.image(200, 270,'Jugar').setScale(0.2);
         var crearCarta= this.add.image(450, 310,'Crear carta').setScale(0.7);
-        var crearMazo= this.add.image(700, 290,'Crear mazo').setScale(0.5);
-        var zone1 = this.add.zone(0, 200, 345, 300).setOrigin(0).setName('Jugar').setInteractive();
+        var crearMazo= this.add.image(700, 300,'Crear mazo').setScale(0.5);
+
+        var zone1 = this.add.zone(0, 270, 345, 300).setOrigin(0).setName('Jugar').setInteractive();
         var zone2 = this.add.zone(345, 200, 310, 300).setOrigin(0).setName('Crear carta').setInteractive();
         var zone3 = this.add.zone(655, 200, 369, 300).setOrigin(0).setName('Crear mazo').setInteractive();
 
+        var punteroIcon = this.add.image(1024, 600, 'puntero').setOrigin(0.5, 0).setAngle(-20).setScale(0.2);
+        var label = this.add.text(0, 0, '', { font: "24px Arial Black", fill: "#c51b7d" });
+        label.setStroke('#de77ae', 8);
+        
         this.input.on('gameobjectdown', function (pointer, gameObject) {
 
-            fork.x = pointer.x;
-            fork.y = pointer.y;
+            punteroIcon.x = pointer.x;
+            punteroIcon.y = pointer.y;
 
             label.setText(gameObject.name);
             label.x = gameObject.x;
