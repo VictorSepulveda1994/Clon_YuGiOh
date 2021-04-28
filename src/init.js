@@ -3,8 +3,8 @@ var configuracion =
     type: Phaser.AUTO,
     width: 900,
     height: 600,
-    parent: "container",
-    scene: [Presentacion,Menu],
+    parent: "contenedor",
+    scene: [Presentacion,Menu,Tablero,CrearCarta],
     scale:
     {
         mode: Phaser.Scale.RESIZE,
@@ -12,7 +12,7 @@ var configuracion =
     },
 };
 
-/* const config = {
+/* const configuracion = {
     
     
     type: Phaser.AUTO,
@@ -24,7 +24,7 @@ var configuracion =
         height: 720,
 
     },
-    scene: [Tablero]
+    scene: [Presentacion,Menu,Tablero],
 } */
 
 var game = new Phaser.Game(configuracion);

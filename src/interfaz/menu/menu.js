@@ -76,6 +76,9 @@ class Menu extends Phaser.Scene
 
         jugar.on("pointerup", ()=>{
             console.log("click y soltar")
+            console.log('Desde Menu a Tablero');
+            this.input.stopPropagation();
+            this.scene.switch('Tablero');
         })
 
         //Botón crear carta-----------------------------------------------
@@ -102,8 +105,11 @@ class Menu extends Phaser.Scene
             label.setVisible(false);
         })
 
-        jugar.on("pointerup", ()=>{
+        crearCarta.on("pointerup", ()=>{
             console.log("click y soltar")
+            console.log('Desde Menu a crearCarta');
+            /* this.input.stopPropagation();
+            this.scene.switch('crearCarta'); */
         })
 
         //Botón crear mazo---------------------------------------------
