@@ -4,7 +4,7 @@ var configuracion =
     width: 900,
     height: 600,
     parent: "contenedor",
-    scene: [Presentacion,Menu,Tablero,CrearCarta],
+    scene: [Presentacion,Menu,Tablero,CrearCarta,Mazo,CrearMazo,EditarMazo],
     scale:
     {
         mode: Phaser.Scale.RESIZE,
@@ -12,7 +12,12 @@ var configuracion =
     },
 };
 
-/* const configuracion = {
+
+/* Max
+backgroundColor: '#392542',
+*/
+
+/* sergio const configuracion = {
     
     
     type: Phaser.AUTO,
