@@ -4,6 +4,7 @@ var configuracion =
     width: 900,
     height: 600,
     parent: "container",
+    scene: [Presentacion,Menu],
     scale:
     {
         mode: Phaser.Scale.RESIZE,
@@ -11,8 +12,4 @@ var configuracion =
     },
 };
 
-
 var game = new Phaser.Game(configuracion);
-game.scene.add('presentacion', Presentacion);
-game.scene.add('menu', Menu);
-game.scene.start('presentacion');

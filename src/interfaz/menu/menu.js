@@ -3,6 +3,11 @@
 */
 class Menu extends Phaser.Scene
 {
+    constructor()
+    {
+        super({key: "menu"});
+    }
+
     preload ()
     {
         this.sprites = [];
@@ -13,6 +18,7 @@ class Menu extends Phaser.Scene
         this.load.image('puntero', 'assets/copihue.png');
         //this.load.image('donuts', 'assets/pics/donuts.jpg');
         //this.load.image('fork', 'assets/sprites/fork.png');
+        console.log("se ha cargado menu.js scene");
     }
 
     create ()

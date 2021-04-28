@@ -35,6 +35,14 @@ class Presentacion extends Phaser.Scene
         }
 
         this.add.image(490, 350, 'logo').setBlendMode(Phaser.BlendModes.COLOR_BURN);
+
+        //Para cambiar de escena
+        this.input.on('pointerdown', function () 
+        {
+            console.log('Desde Presentacion a Menú');
+            this.input.stopPropagation();
+            this.scene.switch('menu');
+        }, this);
     }
     
     update ()
@@ -49,6 +57,5 @@ class Presentacion extends Phaser.Scene
             }
         }
     }
-
 
 }
