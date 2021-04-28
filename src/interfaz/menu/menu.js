@@ -6,7 +6,7 @@ class Menu extends Phaser.Scene
     preload ()
     {
         this.sprites = [];
-        this.load.image('particula', 'assets/red.png');
+        this.load.image('particula', 'assets/white.png');
         this.load.image('Jugar', 'assets/play.png');
         this.load.image('Crear carta', 'assets/crearCarta.png');
         this.load.image('Crear mazo', 'assets/crearMazo.png');
@@ -28,7 +28,7 @@ class Menu extends Phaser.Scene
             //image.setBlendMode(Phaser.BlendModes.OVERLAY);
             //image.setBlendMode(Phaser.BlendModes.ADD);
 
-            this.sprites.push({ s: image, r: 7 + Math.random() * 14 });
+            this.sprites.push({ s: image, r: 1 + Math.random() * 4 });
         }
 
         var punteroIcon = this.add.image(1024, 600, 'puntero').setOrigin(0.5, 0).setAngle(-20).setScale(0.2);

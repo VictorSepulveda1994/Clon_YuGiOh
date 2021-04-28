@@ -13,6 +13,6 @@ var configuracion =
 
 
 var game = new Phaser.Game(configuracion);
-game.scene.add('Presentacion', Presentacion);
+game.scene.add('presentacion', Presentacion);
 game.scene.add('menu', Menu);
-game.scene.start('menu');
+game.scene.start('presentacion');

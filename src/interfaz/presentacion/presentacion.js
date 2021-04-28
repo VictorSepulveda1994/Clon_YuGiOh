@@ -12,7 +12,7 @@ class Presentacion extends Phaser.Scene
     preload ()
     {
         this.load.image('logo', 'assets/logo.png');
-        this.load.image('particula', 'assets/red.png');
+        this.load.image('particula', 'assets/white.png');
         console.log("se ha cargado presentacion.js scene");
     }
 
