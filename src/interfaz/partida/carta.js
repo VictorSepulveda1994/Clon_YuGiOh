@@ -6,7 +6,7 @@
 class carta{
     constructor(scene){
         this.render = (x,y,sprite) =>{
-            var carta = scene.add.image(x,y,sprite).setScale(0.17,0.17).setInteractive();
+            var carta = scene.add.image(x,y,sprite).setScale(0.35,0.35).setInteractive();
             scene.input.setDraggable(carta);
             /**
              * Funcion para el manejo de arrastre de una carta

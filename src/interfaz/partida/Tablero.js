@@ -51,14 +51,14 @@ class Tablero extends Phaser.Scene {
         
 
         this.coordenadas = [
-            {x: 20, y:40, color: 2},
-            {x: 110, y:40, color: 3},
+            {x: 95, y:40, color: 2},
+            {x: 185, y:40, color: 3},
             {x: 395, y:40, color: 2},
             {x: 545, y:40, color: 2},
             {x: 695, y:40, color: 2},
             {x: 845, y:40, color: 2},
             {x: 995, y:40, color: 2},
-            {x: 70, y:190, color: 4},
+            {x: 145, y:190, color: 4},
             {x: 350, y:190, color: 1},
             {x: 500, y:190, color: 1},
             {x: 650, y:190, color: 1},
@@ -69,14 +69,14 @@ class Tablero extends Phaser.Scene {
             {x: 490, y:420, color: 1},
             {x: 640, y:420, color: 1},
             {x: 790, y:420, color: 1},
-            {x: 1130, y:420, color: 4},
+            {x: 995, y:420, color: 4},
             {x: 145, y:570, color: 2},
             {x: 295, y:570, color: 2},
             {x: 445, y:570, color: 2},
             {x: 595, y:570, color: 2},
             {x: 745, y:570, color: 2},
-            {x: 1090, y:570, color: 3},
-            {x: 1180, y:570, color: 2},
+            {x: 955, y:570, color: 3},
+            {x: 1045, y:570, color: 2},
 
         ]
         /**
@@ -86,6 +86,7 @@ class Tablero extends Phaser.Scene {
          */
         this.zonaCartas = [];
         this.renderCartas = [];
+
         
         /**
          * ciclo para la creacion de las zonas y sus respectivas renderizaciones
@@ -120,8 +121,82 @@ class Tablero extends Phaser.Scene {
         })
 
 
+        /**
+         * Creacion barras de vida 
+         * dos barras de vida
+         * una player otra para oponente
+         * 4000 de vida equivalente al 100% de la barra
+         */
+         this.hacerBarra = (x,y,color,largo) =>{
+            let barra = this.add.graphics();
+            barra.fillStyle(color,1);
+            barra.fillRect(0,0,largo,20);
+            barra.x = x;
+            barra.y = y;
+            return barra;
+        }
+        var vidaOponente = 400;
+        let vidaUsuario = 400;
+
+        let barraOponente = this.hacerBarra(1240,40,0x2ecc71,vidaOponente);
+        let barraUsuario = this.hacerBarra(1240,570,0x2ecc71,vidaUsuario);
+        /**
+         * 
+         * @param {*} barra : Barra a actualizar, puede ser una barra oponente o barra usuario 
+         * @param {*} valor : Cantidad de "danno" o "curacion" inflingido a un oponente o 
+         * usuario, este se usara para actualizar valores de escala de la barra
+         * 
+         * Esta funcion se encarga de actualizar el tamaño de la barra a crear, es decir
+         * si esto ocurre la barra cambiara su tamanno dependiendo de cuanto valor sea enviado
+         * esto actualizara el tamanno de la barra
+         */
+        this.setValorBarra=(barra,valor)=>{
+            barra.scaleX = valor/400;
+        }
         
-            
+        /**
+        * el daño tendra que ser divido en base a 10
+        * debido que como la barra de vida es proporcional a
+        * la cantidad de vida de un usuario, esta se ira disminuyendo
+        * en base a esta, es decir 
+        * si la vida es 4000 pasa a 400 por temas de tamaño de pantalla
+        * un golde de 200 pasa a ser de 20 y uno de 2000 pasa a ser de 200
+        * esa se actualiza en la funcion setValorBarra-->
+        */
+        this.quitarPuntosOponente = () => {
+            vidaOponente-=10;
+            if(!(vidaOponente<=0)){
+                self.setValorBarra(barraOponente,vidaOponente);
+            }else if(vidaOponente<=0){
+                self.setValorBarra(barraOponente,0);
+                this.puntosOponente.destroy();
+            }
+        }
+        this.puntosOponente=this.add.text(1240,500,['oponente']).setFontSize(13).setColor('#00ff00').setInteractive();
+
+        this.puntosOponente.on('pointerdown',function(){
+            self.quitarPuntosOponente();
+        })
+        this.quitarPuntosUsuario = () => {
+            vidaUsuario-=10;
+            if(!(vidaUsuario < 0)){
+                self.setValorBarra(barraUsuario,vidaUsuario);
+            }else if(vidaUsuario<=0){
+                self.setValorBarra(barraUsuario,0);
+                this.puntosUsuario.destroy();
+            }            
+        }
+       this.puntosUsuario=this.add.text(1340,500,['usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
+
+       this.puntosUsuario.on('pointerdown',function(){
+            self.quitarPuntosUsuario();
+        })
+
+        this.imagen = this.add.image(0,0,'cartaAux');
+        this.container = this.add.container(1450,250);
+        this.container.add(this.imagen);
+
+        
             
 
     }

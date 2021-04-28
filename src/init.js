@@ -1,12 +1,14 @@
 const config = {
-    width: 1280,
-    height: 720,
+    
     
     type: Phaser.AUTO,
     scale: {
         parent: "contenedor",
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
         mode: Phaser.Scale.FIT,
+        width: 1680,
+        height: 720,
+
     },
     scene: [Tablero]
 }
