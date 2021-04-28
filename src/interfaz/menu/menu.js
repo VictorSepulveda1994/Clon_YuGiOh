@@ -47,14 +47,14 @@ class Menu extends Phaser.Scene
         punteroIcon.setOrigin(0.5, 0.5);
         punteroIcon.setAngle(80);
         punteroIcon.setScale(0.4);
-        punteroIcon.setDepth(0);
+        punteroIcon.setDepth(1);
         punteroIcon.setVisible(false);
 
         //Botón jugar---------------------------------------------------
         var jugar = this.add.image(200, 270,'Jugar')
         jugar.setScale(0.2);
         jugar.setName('Jugar');
-        jugar.setDepth(1);
+        jugar.setDepth(0);
         jugar.setInteractive();
 
         jugar.on("pointerover", ()=>{
@@ -85,7 +85,7 @@ class Menu extends Phaser.Scene
         var crearCarta = this.add.image(450, 310,'Crear carta');
         crearCarta.setScale(0.7);
         crearCarta.setName('Crear Carta');
-        crearCarta.setDepth(1);
+        crearCarta.setDepth(0);
         crearCarta.setInteractive();
 
         crearCarta.on("pointerover", ()=>{
@@ -116,7 +116,7 @@ class Menu extends Phaser.Scene
         var crearMazo = this.add.image(700, 300,'Crear mazo');
         crearMazo.setScale(0.5);
         crearMazo.setName('Crear Mazo');
-        crearMazo.setDepth(1);
+        crearMazo.setDepth(0);
         crearMazo.setInteractive();
 
         crearMazo.on("pointerover", ()=>{
