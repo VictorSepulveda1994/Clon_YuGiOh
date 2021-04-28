@@ -37,21 +37,106 @@ class Menu extends Phaser.Scene
             this.sprites.push({ s: image, r: 1 + Math.random() * 4 });
         }
 
-        var punteroIcon = this.add.image(1024, 600, 'puntero').setOrigin(0.5, 0).setAngle(-20).setScale(0.2);
+        //Etiqueta botón
         var label = this.add.text(0, 0, '', { font: "24px Arial Black", fill: "#c51b7d" });
         label.setStroke('#de77ae', 8);
+        label.setDepth(1);
 
-        var jugar= this.add.image(200, 270,'Jugar').setScale(0.2);
-        var crearCarta= this.add.image(450, 310,'Crear carta').setScale(0.7);
-        var crearMazo= this.add.image(700, 300,'Crear mazo').setScale(0.5);
+        //puntero 
+        var punteroIcon = this.add.image(1024, 1000, 'puntero');
+        punteroIcon.setOrigin(0.5, 0.5);
+        punteroIcon.setAngle(80);
+        punteroIcon.setScale(0.4);
+        punteroIcon.setDepth(0);
+        punteroIcon.setVisible(false);
 
-        var zone1 = this.add.zone(0, 270, 345, 300).setOrigin(0).setName('Jugar').setInteractive();
+        //Botón jugar---------------------------------------------------
+        var jugar = this.add.image(200, 270,'Jugar')
+        jugar.setScale(0.2);
+        jugar.setName('Jugar');
+        jugar.setDepth(1);
+        jugar.setInteractive();
+
+        jugar.on("pointerover", ()=>{
+            console.log("encima")
+            punteroIcon.setVisible(true);
+            punteroIcon.x = jugar.x+20;
+            punteroIcon.y = jugar.y+30;
+            label.setVisible(true);
+            label.setText(jugar.name);
+            label.x = jugar.x;
+            label.y = 180;
+        })
+
+        jugar.on("pointerout", ()=>{
+            console.log("afuera")
+            punteroIcon.setVisible (false);
+            label.setVisible(false);
+        })
+
+        jugar.on("pointerup", ()=>{
+            console.log("click y soltar")
+        })
+
+        //Botón crear carta-----------------------------------------------
+        var crearCarta = this.add.image(450, 310,'Crear carta');
+        crearCarta.setScale(0.7);
+        crearCarta.setName('Crear Carta');
+        crearCarta.setDepth(1);
+        crearCarta.setInteractive();
+
+        crearCarta.on("pointerover", ()=>{
+            console.log("encima")
+            punteroIcon.setVisible(true);
+            punteroIcon.x = crearCarta.x;
+            punteroIcon.y = 300;
+            label.setVisible(true);
+            label.setText(crearCarta.name);
+            label.x = crearCarta.x-70;
+            label.y = 180;
+        })
+
+        crearCarta.on("pointerout", ()=>{
+            console.log("afuera")
+            punteroIcon.setVisible (false);
+            label.setVisible(false);
+        })
+
+        jugar.on("pointerup", ()=>{
+            console.log("click y soltar")
+        })
+
+        //Botón crear mazo---------------------------------------------
+        var crearMazo = this.add.image(700, 300,'Crear mazo');
+        crearMazo.setScale(0.5);
+        crearMazo.setName('Crear Mazo');
+        crearMazo.setDepth(1);
+        crearMazo.setInteractive();
+
+        crearMazo.on("pointerover", ()=>{
+            console.log("encima")
+            punteroIcon.setVisible(true);
+            punteroIcon.x = crearMazo.x;
+            punteroIcon.y = 300;
+            label.setVisible(true);
+            label.setText(crearMazo.name);
+            label.x = crearMazo.x-70;
+            label.y = 180;
+        })
+
+        crearMazo.on("pointerout", ()=>{
+            console.log("afuera")
+            punteroIcon.setVisible (false);
+            label.setVisible(false);
+        })
+
+        crearMazo.on("pointerup", ()=>{
+            console.log("click y soltar")
+        })
+
+        /* var zone1 = this.add.zone(0, 270, 345, 300).setOrigin(0).setName('Jugar').setInteractive();
         var zone2 = this.add.zone(345, 200, 310, 300).setOrigin(0).setName('Crear carta').setInteractive();
         var zone3 = this.add.zone(655, 200, 369, 300).setOrigin(0).setName('Crear mazo').setInteractive();
-
-        var punteroIcon = this.add.image(1024, 600, 'puntero').setOrigin(0.5, 0).setAngle(-20).setScale(0.2);
-        var label = this.add.text(0, 0, '', { font: "24px Arial Black", fill: "#c51b7d" });
-        label.setStroke('#de77ae', 8);
 
         this.input.on('gameobjectdown', function (pointer, gameObject) {
 
@@ -60,10 +145,8 @@ class Menu extends Phaser.Scene
 
             label.setText(gameObject.name);
             label.x = gameObject.x;
-            label.y = gameObject.y;
-
-        });
-        
+            label.y = gameObject.y - 20;
+        }); */
     }
 
     update()
