@@ -138,6 +138,9 @@ class Menu extends Phaser.Scene
 
         crearMazo.on("pointerup", ()=>{
             console.log("click y soltar")
+            console.log('Desde Menu a crearCarta');
+            this.input.stopPropagation();
+            this.scene.switch('EditarMazo');
         })
 
         /* var zone1 = this.add.zone(0, 270, 345, 300).setOrigin(0).setName('Jugar').setInteractive();

@@ -4,7 +4,7 @@ var configuracion =
     width: 900,
     height: 600,
     parent: "contenedor",
-    scene: [Presentacion,Menu,Tablero,CrearCarta,Mazo,CrearMazo,EditarMazo],
+    scene: [Presentacion,Menu,Tablero,CrearCarta,EditarMazo],
     scale:
     {
         mode: Phaser.Scale.RESIZE,
