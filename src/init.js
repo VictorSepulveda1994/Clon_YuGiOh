@@ -9,7 +9,8 @@ const config = {
     parent: "contenedor",
     //type: Phaser.CANVAS,
     //backgroundColor: '#000000',
-    scene: [Mazo, CrearMazo, EditarMazo],
+    //scene: [Mazo, CrearMazo, EditarMazo],
+    scene: [CrearMazo],
     physics: {
         default: 'arcade',
         arcade: {
