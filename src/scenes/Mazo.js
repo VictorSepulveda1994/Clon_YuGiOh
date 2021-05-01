@@ -1,8 +1,8 @@
+import { RestartButton } from "../components/restart-button.js";
 class Mazo extends Phaser.Scene {
     constructor() {
         super({key: "Mazo"});
-        var button;
-        var background;
+        this.restartButton = new RestartButton(this);
     }
 
     preload() {
