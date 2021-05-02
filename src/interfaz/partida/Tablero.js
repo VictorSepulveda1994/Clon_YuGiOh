@@ -1,24 +1,38 @@
 class Tablero extends Phaser.Scene {
     constructor() {
         super({ key: "Tablero" });
-
+    
     }
 
     preload() {
-        this.load.image('cartaAux','./src/datos/chungo.png')
+        this.load.image('cartaAux','./assets/chungo.png');
+        this.load.image('reversoCarta','./assets/reversoCarta.png');
     }
 
     create() {
-
+        
         let self = this;
+
+        
+            
+        this.linea1 = this.add.graphics();
+        this.linea1.fillStyle(0xffffff,1);
+        this.linea1.fillRect(0,360,1200,1);
+
+        this.linea2 = this.add.graphics();
+        this.linea2.fillStyle(0xffffff,1);
+        this.linea2.fillRect(1200,0,1,720);
+        
         /**
          * funcion que da 5 cartas por el momento no posee logica requerida
          * para el completo manejo de una mano del usuario
          */
+
+        
         this.darCartas = () => {
             for (let i = 0; i < 5; i++) {
                 var cartaJugador = new carta(this);
-                cartaJugador.render(450+(i*100),500,'cartaAux');
+                cartaJugador.render(1300+(i*50),650,'cartaAux');
             }
         }
         /**
@@ -26,7 +40,7 @@ class Tablero extends Phaser.Scene {
          * por el momento es un boton tipo texto que inicializa con 5 cartas en el tablero (-->this.darcartas)
          * las funciones que se inicializan con pointerout y pointerover cambian el color del boton de texto
          */
-        this.darTexto=this.add.text(600,300,['Iniciar']).setFontSize(13).setColor('#00ff00').setInteractive();
+        this.darTexto = this.add.text(600,300,['Iniciar ']).setFontSize(13).setColor('#00ff00').setInteractive();
 
         this.darTexto.on('pointerdown',function(){
             self.darCartas();
@@ -51,7 +65,7 @@ class Tablero extends Phaser.Scene {
         
 
         this.coordenadas = [
-            {x: 95, y:40, color: 2},
+            {x: 95, y:40, color: 5},
             {x: 185, y:40, color: 3},
             {x: 395, y:40, color: 2},
             {x: 545, y:40, color: 2},
@@ -76,7 +90,7 @@ class Tablero extends Phaser.Scene {
             {x: 595, y:570, color: 2},
             {x: 745, y:570, color: 2},
             {x: 955, y:570, color: 3},
-            {x: 1045, y:570, color: 2},
+            {x: 1045, y:570, color: 5},
 
         ]
         /**
@@ -93,6 +107,7 @@ class Tablero extends Phaser.Scene {
          */
         for(let i=0; i<26; i++){
             this.zonaAux = new Zona(this, this.coordenadas[i].x, this.coordenadas[i].y, this.coordenadas[i].color);
+            
             this.renderAux = this.zonaAux.renderZone();
             this.zonaAux.renderOutline(this.renderAux);
              
@@ -172,7 +187,7 @@ class Tablero extends Phaser.Scene {
                 this.puntosOponente.destroy();
             }
         }
-        this.puntosOponente=this.add.text(1240,500,['oponente']).setFontSize(13).setColor('#00ff00').setInteractive();
+        this.puntosOponente=this.add.text(550,330,['oponente']).setFontSize(13).setColor('#00ff00').setInteractive();
 
         this.puntosOponente.on('pointerdown',function(){
             self.quitarPuntosOponente();
@@ -186,22 +201,59 @@ class Tablero extends Phaser.Scene {
                 this.puntosUsuario.destroy();
             }            
         }
-       this.puntosUsuario=this.add.text(1340,500,['usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
+       this.puntosUsuario=this.add.text(650,330,['usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
 
        this.puntosUsuario.on('pointerdown',function(){
             self.quitarPuntosUsuario();
         })
 
         this.imagen = this.add.image(0,0,'cartaAux');
-        this.container = this.add.container(1450,250);
+        this.container = this.add.container(1440,300);
         this.container.add(this.imagen);
 
+        /**
+         * Agregar mazo a tablero (solo visualmente)
+         * falta agregar funcionalidad de sacar una carta
+         * solo mostrara una carta
+         */
+         var mazoUsuario = new carta(this);
+         var mazoOponente = new carta(this);
         
+         
+        
+
+         mazoUsuario.render(993.5,620,'reversoCarta').disableInteractive();;
+         mazoOponente.render(222.5,90,'reversoCarta').disableInteractive();;
+
+         
+ 
+         this.renderCartas[1].data.values.cards++;
+         this.renderCartas[24].data.values.cards++;
+ 
+         /**
+          * prueba de funcion para mazo (quitar cartas, si no quedan cartas fin de juego)
+          */
+         var numeroCartasUsuario = 30;
+         this.textoMazoUsuario = this.add.text(993.5,620,[numeroCartasUsuario]).setFontSize(13).setColor('#00ff00').setInteractive();
+         this.quitarCartasMazo = () => {
+             numeroCartasUsuario-=1;
+             if(numeroCartasUsuario<=0){
+                console.log("fin de juego");
+                this.textoMazoUsuario.setText(0);
+             }else{
+                this.textoMazoUsuario.setText([numeroCartasUsuario]);
+             }
+             console.log(numeroCartasUsuario);
+         }
+         this.botonQuitarCartaMazo=this.add.text(950,670,['mazo usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
+         this.botonQuitarCartaMazo.on('pointerdown',function(){
+             self.quitarCartasMazo();
+         })
             
 
     }
     
-
+    
 
 
 }

@@ -1,4 +1,4 @@
-var configuracion = 
+/*var configuracion = 
 {
     type: Phaser.AUTO,
     width: 900,
@@ -10,26 +10,43 @@ var configuracion =
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.Center
     },
+    
 };
-
+*/
 
 /* Max
 backgroundColor: '#392542',
 */
 
-/* sergio const configuracion = {
+const configuracion = {
     
     
     type: Phaser.AUTO,
     scale: {
         parent: "contenedor",
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        mode: Phaser.Scale.FIT,
         width: 1680,
         height: 720,
 
     },
     scene: [Presentacion,Menu,Tablero],
-} */
+    
+    callbacks:{
+        postBoot: function (game) {
+            // In v3.15, you have to override Phaser's default styles
+            game.canvas.style.width = '100%';
+            game.canvas.style.height = '100%';
+          }
+    }
+}
 
 var game = new Phaser.Game(configuracion);
+
+/*function update(){
+    (function() {
+        const gameId = document.getElementById("game"); // Target div that wraps the phaser game
+        gameId.style.width = '100%'; // set width to 100%
+        gameId.style.height = '100%'; // set height to 100%
+    })(); // run function
+}
+*/
+
