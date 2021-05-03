@@ -12,13 +12,12 @@ class EditarMazo extends Phaser.Scene {
         }
     }
 
-
     create() {
         for(var i = 0; i < 7; i++) {
-            var xx = Phaser.Math.Between(game.config.width*.25, game.config.width*.75);
-            var yy = Phaser.Math.Between(game.config.height*.25, game.config.height*.75);
+            var xx = i*120//Phaser.Math.Between(game.config.width*.25, game.config.width*.75);
+            var yy = 70//Phaser.Math.Between(game.config.height*.25, game.config.height*.75);
             var dot = this.add.image(xx, yy, "dot"+i);
-            //dot.setScale(1, 4);
+            dot.setScale(0.5);
             dot.setInteractive();
         }
         this.input.on('pointerdown', this.startDrag, this);
