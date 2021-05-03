@@ -18,6 +18,7 @@ class carta{
              * posicion inicial)
              */
             carta.on('dragstart', function (pointer) {
+                
                 this.setTint(0xff0000);
             });
     
@@ -33,6 +34,10 @@ class carta{
                     this.y = this.carta.dragStartY;
                 }
             });
+
+            carta.on('pointerdown', function(){
+                scene.cambiarVisualizacion(sprite);
+            })
             return carta;
         }
     }

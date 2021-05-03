@@ -1,3 +1,5 @@
+
+
 class Tablero extends Phaser.Scene {
     constructor() {
         super({ key: "Tablero" });
@@ -7,8 +9,17 @@ class Tablero extends Phaser.Scene {
     preload() {
         this.load.image('cartaAux','./assets/chungo.png');
         this.load.image('reversoCarta','./assets/reversoCarta.png');
-    }
+        this.load.image('carabineroExpresivo','/assets/carabineroExpresivo.png');
+        this.load.image('investigacionAFondo','/assets/investigacionAFondo.png');
+        this.load.image('trauco','/assets/trauco.png');
+        this.load.image('bonoDePresidente','/assets/bonoDePresidente.png');
 
+    }
+    cambiarVisualizacion(nombreCarta){
+        console.log(nombreCarta);
+        var imagen = this.add.image(0,0,nombreCarta);
+        this.container.add(imagen);
+    }
     create() {
         
         let self = this;
@@ -22,17 +33,29 @@ class Tablero extends Phaser.Scene {
         this.linea2 = this.add.graphics();
         this.linea2.fillStyle(0xffffff,1);
         this.linea2.fillRect(1200,0,1,720);
+
+
+        
+        this.container = this.add.container(1440,300);
+        
+        
         
         /**
          * funcion que da 5 cartas por el momento no posee logica requerida
          * para el completo manejo de una mano del usuario
          */
-
+        this.cartas = [
+            'cartaAux',
+            'carabineroExpresivo',
+            'investigacionAFondo',
+            'trauco',
+            'bonoDePresidente'
+        ];
         
         this.darCartas = () => {
             for (let i = 0; i < 5; i++) {
                 var cartaJugador = new carta(this);
-                cartaJugador.render(1300+(i*50),650,'cartaAux');
+                cartaJugador.render(1300+(i*50),650,this.cartas[i]);
             }
         }
         /**
@@ -128,7 +151,8 @@ class Tablero extends Phaser.Scene {
                 dropZone.data.values.cards++;
                 gameObject.x = dropZone.x ;
                 gameObject.y = dropZone.y ;
-                gameObject.disableInteractive();
+                gameObject.input.draggable = false;
+                //gameObject.disableInteractive();
             }else{
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
@@ -207,9 +231,7 @@ class Tablero extends Phaser.Scene {
             self.quitarPuntosUsuario();
         })
 
-        this.imagen = this.add.image(0,0,'cartaAux');
-        this.container = this.add.container(1440,300);
-        this.container.add(this.imagen);
+        
 
         /**
          * Agregar mazo a tablero (solo visualmente)
@@ -229,7 +251,9 @@ class Tablero extends Phaser.Scene {
  
          this.renderCartas[1].data.values.cards++;
          this.renderCartas[24].data.values.cards++;
- 
+        
+        
+
          /**
           * prueba de funcion para mazo (quitar cartas, si no quedan cartas fin de juego)
           */
