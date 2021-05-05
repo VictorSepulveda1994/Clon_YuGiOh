@@ -9,7 +9,7 @@
     constructor(scene,x,y,color) {
         this.renderZone = () => {
             
-            let dropZone = scene.add.zone(780, 200, 130, 400).setRectangleDropZone(130, 400);
+            let dropZone = scene.add.zone(800, 200, 130, 400).setRectangleDropZone(130, 400);
             /**
              * esta podra almacenar datos de una carta, donde se podra identificar los
              * datos de una carta asociada a una zona
