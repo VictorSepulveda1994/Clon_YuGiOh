@@ -17,7 +17,7 @@ class Tablero extends Phaser.Scene {
          */
         this.darCartas = () => {
             for (let i = 0; i < 5; i++) {
-                var cartaJugador = new carta(this);
+                var cartaJugador = new CartaEdicion(this);
                 cartaJugador.render(450+(i*100),500,'cartaAux');
             }
         }
@@ -91,6 +91,7 @@ class Tablero extends Phaser.Scene {
         /**
          * ciclo para la creacion de las zonas y sus respectivas renderizaciones
          */
+        
         for(let i=0; i<26; i++){
             this.zonaAux = new Zona(this, this.coordenadas[i].x, this.coordenadas[i].y, this.coordenadas[i].color);
             this.renderAux = this.zonaAux.renderZone();

@@ -1,34 +1,71 @@
 class EditarMazo extends Phaser.Scene {
     constructor() {
         super({key: "EditarMazo"});
-        var button;
-        var background;
+        
     }
 
     preload() {
-        for(var i = 0; i < 7; i++) {
-            //this.load.image("dot"+i, "images/"+i, ".png");
-            this.load.image("dot"+i,'./src/datos/chungo.png');
-        }
+            this.load.image('chungo','./src/datos/chungo.png');
+            this.load.image('chungoNombre','./src/datos/chungoNombre.png');
+
     }
 
     create() {
-        for(var i = 0; i < 7; i++) {
-            var xx = i*120//Phaser.Math.Between(game.config.width*.25, game.config.width*.75);
-            var yy = 70//Phaser.Math.Between(game.config.height*.25, game.config.height*.75);
-            var dot = this.add.image(xx, yy, "dot"+i);
-            dot.setScale(0.5);
-            dot.setInteractive();
+
+        let self = this;
+        /*
+        this.zonaAux = new Zona(this, 100, 300, 0xff69b4);
+        this.renderAux = this.zonaAux.renderZone();
+        this.zonaAux.renderOutline(this.renderAux);
+        */
+
+        this.zonaMazo = new ZonaMazo(this, 770,200, 2);
+        this.dropZone = this.zonaMazo.renderZone();
+        this.outline = this.zonaMazo.renderOutline(this.dropZone);
+
+
+        //this.mostrarCartas= () =>{
+        for(let i = 0; i < 6; i++) {
+            var cartaJugador = new CartaEdicion(this);
+            cartaJugador.render(i*105+50,70,'chungo');
+            //var xx = i*105+50//Phaser.Math.Between(game.config.width*.25, game.config.width*.75);
+            //var yy = 70//Phaser.Math.Between(game.config.height*.25, game.config.height*.75);
+            //var dot = this.add.image(xx, yy, "dot"+i);
+            //cartaJugador.setScale(0.5);
+            //cartaJugador.setInteractive();
         }
-        this.input.on('pointerdown', this.startDrag, this);
+        //}
+        //self.mostrarCartas();
+
+        
+        this.input.on('drop', function (pointer, gameObject, dropZone) {      
+            console.log("coordenadas del objeto"+gameObject.x + ","+gameObject.y );
+            console.log("coordenadas de la zona"+dropZone.x + ","+dropZone.y );
+            if(dropZone.data.values.cards<=30){
+                dropZone.data.values.cards++;
+                //var wea = this.add.image(dropZone.x,dropZone.y,'chungoNombre');
+                //gameObject.x = dropZone.x ;
+                //gameObject.y = dropZone.y ;
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+                //gameObject.disableInteractive();
+            }else{
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+            }
+        })
+        
+
+        //this.input.on('pointerdown', this.startDrag, this);
         //let graphics = this.add.graphics();
         //graphics.fillStyle(0xff3300, 1);
-        //graphics.fillRect(10, 10, 1180, 580);
-        //this.add.text(50, 50, "Menu principal Yu Gi Oh", { font: "50px Courier", fill: "#000000"});
-        //this.add.text(50, 200, "Opcion1", { font: "50px Courier", fill: "#000000"});
-        //this.add.text(50, 300, "Opcion2", { font: "50px Courier", fill: "#000000"});
-        //this.add.text(50, 400, "Opcion3", { font: "50px Courier", fill: "#000000"});
+        //graphics.fillRect(768, 200, 130, 400);
+        //this.add.text(50, 50, "Zona del mazo", { font: "50px Courier", fill: "#000000"});
+
+
     }
+
+    /*
     startDrag(pointer, targets) {
         console.log("start drog");
         this.input.off('pointerdown', this.startDrag, this);
@@ -49,7 +86,7 @@ class EditarMazo extends Phaser.Scene {
         this.input.off('pointermove', this.doDrag, this);
         this.input.off('pointerup', this.stopDrag, this);        
     }
-
+*/
     update(time, delta) {
 
     }
