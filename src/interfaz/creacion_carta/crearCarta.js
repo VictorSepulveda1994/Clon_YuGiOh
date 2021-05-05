@@ -75,7 +75,7 @@ class CrearCarta extends Phaser.Scene
 
         var label = this.add.text(500, 330, "", { font: "24px Arial Black", fill: "#c51b7d" });
         label.setStroke('#de77ae', 8);
-        //label.setVisible(false);
+        label.setVisible(false);
 
         mas.setInteractive();
         mas.on("pointerup", ()=>{
