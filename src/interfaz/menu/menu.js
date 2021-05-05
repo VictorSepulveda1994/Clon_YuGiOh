@@ -108,8 +108,8 @@ class Menu extends Phaser.Scene
         crearCarta.on("pointerup", ()=>{
             console.log("click y soltar")
             console.log('Desde Menu a crearCarta');
-            /* this.input.stopPropagation();
-            this.scene.switch('crearCarta'); */
+            this.input.stopPropagation();
+            this.scene.switch('crearCarta');
         })
 
         //Botón crear mazo---------------------------------------------

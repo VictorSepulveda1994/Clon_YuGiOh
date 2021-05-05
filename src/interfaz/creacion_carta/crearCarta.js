@@ -1,81 +1,107 @@
 class CrearCarta extends Phaser.Scene
 {
+    _carta= Carta;
     constructor()
     {
         super({key: "crearCarta"});
     }
 
-    create() {
-        this.isPlayerA = false;
-        this.opponentCards = [];
-
-        this.zone = new Zone(this);
-        this.dropZone = this.zone.renderZone();
-        this.outline = this.zone.renderOutline(this.dropZone);
-
-        this.dealer = new Dealer(this);
-
-        let self = this;
-
+    preload()
+    {
         
 
-        this.socket.on('dealCards', function () {
-            self.dealer.dealCards();
-            self.dealText.disableInteractive();
+        this.sprites = [];
+        this.load.image('menos', 'assets/menos.png');
+        this.load.image('mas', 'assets/mas.png');
+        this.load.image('monstruo', 'assets/icon_monstruo.png');
+        this.load.image('efecto', 'assets/icon_monstruo_efecto.png');
+        this.load.image('magica', 'assets/icon_magica.png');
+        this.load.image('trampa', 'assets/icon_trampa.png');
+        this.load.image('particula', 'assets/white.png');
+        this.load.image('imagen_carta','assets/nasi_republic.jpg');
+        this.load.image('panel_carta','assets/panelCarta.png');
+        this.load.image('add_imagen','assets/add_imagen.png');
+    }
+    create()
+    {
+        //Particulas del fondo
+        for (var i = 0; i < 300; i++)
+        {
+            const x = Phaser.Math.Between(-500, 1000);
+            const y = Phaser.Math.Between(-500, 1000);
+            const image = this.add.image(x, y, 'particula');
+            this.sprites.push({ s: image, r: 1 + Math.random() * 2 });
+        }
+
+        const _carta= new Carta(this,100,150);
+        this._carta=_carta;
+
+        const panel= this.add.image(620,350,'panel_carta');
+        panel.setDisplaySize(400,500);
+        const icon1= this.add.image(500,200,'monstruo');
+        icon1.setScale(0.7);
+        const icon2= this.add.image(580,200,'efecto');
+        icon2.setScale(0.7);
+        const icon3= this.add.image(660,200,'magica');
+        icon3.setScale(0.7);
+        const icon4= this.add.image(740,200,'trampa');
+        icon4.setScale(0.7);
+        const mas= this.add.image(520,300,'mas');
+        mas.setScale(0.2);
+        const menos= this.add.image(520,360,'menos');
+        menos.setScale(0.2);
+        const add_imagen= this.add.image(650,330,'add_imagen');
+        add_imagen.setDisplaySize(100,100);
+
+        icon1.setInteractive();
+        icon1.on("pointerup", ()=>{
+            _carta.setTipo("monstruo");
         })
 
-        this.socket.on('cardPlayed', function (gameObject, isPlayerA) {
-            if (isPlayerA !== self.isPlayerA) {
-                let sprite = gameObject.textureKey;
-                self.opponentCards.shift().destroy();
-                self.dropZone.data.values.cards++;
-                let card = new Card(self);
-                card.render(((self.dropZone.x - 350) + (self.dropZone.data.values.cards * 50)), (self.dropZone.y), sprite).disableInteractive();
-            }
+        icon2.setInteractive();
+        icon2.on("pointerup", ()=>{
+            _carta.setTipo("efecto");
         })
 
-        this.dealText = this.add.text(75, 350, ['DEAL CARDS']).setFontSize(18).setFontFamily('Trebuchet MS').setColor('#00ffff').setInteractive();
-
-        this.dealText.on('pointerdown', function () {
-            self.socket.emit("dealCards");
+        icon3.setInteractive();
+        icon3.on("pointerup", ()=>{
+            _carta.setTipo("magica");
         })
 
-        this.dealText.on('pointerover', function () {
-            self.dealText.setColor('#ff69b4');
+        icon4.setInteractive();
+        icon4.on("pointerup", ()=>{
+            _carta.setTipo("trampa");
         })
 
-        this.dealText.on('pointerout', function () {
-            self.dealText.setColor('#00ffff');
-        })
+        var label = this.add.text(500, 330, "", { font: "24px Arial Black", fill: "#c51b7d" });
+        label.setStroke('#de77ae', 8);
+        //label.setVisible(false);
 
-        this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-            gameObject.x = dragX;
-            gameObject.y = dragY;
+        mas.setInteractive();
+        mas.on("pointerup", ()=>{
+            _carta.masNivel;
+            var num= _carta.getNivel+"";
+            label.setText(_carta.getNivel+"");
         })
-
-        this.input.on('dragstart', function (pointer, gameObject) {
-            gameObject.setTint(0xff69b4);
-            self.children.bringToTop(gameObject);
-        })
-
-        this.input.on('dragend', function (pointer, gameObject, dropped) {
-            gameObject.setTint();
-            if (!dropped) {
-                gameObject.x = gameObject.input.dragStartX;
-                gameObject.y = gameObject.input.dragStartY;
-            }
-        })
-
-        this.input.on('drop', function (pointer, gameObject, dropZone) {
-            dropZone.data.values.cards++;
-            gameObject.x = (dropZone.x - 350) + (dropZone.data.values.cards * 50);
-            gameObject.y = dropZone.y;
-            gameObject.disableInteractive();
-            self.socket.emit('cardPlayed', gameObject, self.isPlayerA);
+       
+        menos.setInteractive();
+        menos.on("pointerup", ()=>{
+            _carta.menosNivel;
+            var num= _carta.getNivel+"";
+            label.setText(num);
         })
     }
 
-    update() {
-
+    update()
+    {
+        for (var i = 0; i < this.sprites.length; i++)
+        {
+            const sprite = this.sprites[i].s;
+            sprite.y -= this.sprites[i].r;
+            if (sprite.y < -256)
+            {
+                sprite.y = 700;
+            }
+        }
     }
 }
