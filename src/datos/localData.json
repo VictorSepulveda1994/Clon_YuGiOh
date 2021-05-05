@@ -4,16 +4,8 @@
         { "ip":"" }
     ],
     "carta":[
-        { "id":"","":"","nombre":"",
-            "descripción":"", 
-            "imagen":"","habilidad":"","tipo":"Monstruo",
-            "Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito"
-        },
-        { "id":"","":"","nombre":"",
-            "descripción":"",
-            "imagen":"","habilidad":"","tipo":"Monstruo",
-            "Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito"
-        }
+        { "id":"","nombre":"","descripción":"","imagen":"","habilidad":"","tipo":"Monstruo","Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito" },
+        { "id":"","nombre":"","descripción":"","imagen":"","habilidad":"","tipo":"Monstruo","Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito" }
     ],
     "mazo":[
         { "id":"","nombre":"","ref_jugador":"" },
