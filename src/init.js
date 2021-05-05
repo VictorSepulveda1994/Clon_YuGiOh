@@ -1,4 +1,23 @@
-var configuracion = 
+traerDatos();
+
+function traerDatos()
+{
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('GET', './src/datos/localData.json', true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            console.log(this.responseText);   
+        }
+
+    }
+}
+
+let configuracion = 
 {
     type: Phaser.AUTO,
     width: 900,
@@ -32,4 +51,4 @@ backgroundColor: '#392542',
     scene: [Presentacion,Menu,Tablero],
 } */
 
-var game = new Phaser.Game(configuracion);
+let game = new Phaser.Game(configuracion);

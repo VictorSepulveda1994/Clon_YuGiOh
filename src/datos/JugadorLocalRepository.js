@@ -1,0 +1,7 @@
+class JugadorLocalRepository
+{
+    agregarJugador(jugador) 
+    {
+        
+    };
+}

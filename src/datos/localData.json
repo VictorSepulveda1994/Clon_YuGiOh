@@ -1,0 +1,30 @@
+{
+    "jugador":[
+        { "ip":"" },
+        { "ip":"" }
+    ],
+    "carta":[
+        { "id":"","":"","nombre":"",
+            "descripción":"", 
+            "imagen":"","habilidad":"","tipo":"Monstruo",
+            "Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito"
+        },
+        { "id":"","":"","nombre":"",
+            "descripción":"",
+            "imagen":"","habilidad":"","tipo":"Monstruo",
+            "Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito"
+        }
+    ],
+    "mazo":[
+        { "id":"","nombre":"","ref_jugador":"" },
+        { "id":"","nombre":"","ref_jugador":"" }
+    ],
+    "cartas_mazo":[
+        { "ref_mazo":"","ref_carta":"" },
+        { "ref_mazo":"","ref_carta":"" }
+    ],
+    "monstruos_creados":[
+        { "ref_monstruo":"","ref_jugador":"" },
+        { "ref_monstruo":"","ref_jugador":"" }
+    ]
+}
