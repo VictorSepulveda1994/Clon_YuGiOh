@@ -1,7 +1,7 @@
 var configuracion = 
 {
     type: Phaser.AUTO,
-    width: 900,
+    width: 1080,
     height: 600,
     parent: "contenedor",
     scene: [Presentacion, Menu, Tablero, CrearCarta, EditarMazo],
