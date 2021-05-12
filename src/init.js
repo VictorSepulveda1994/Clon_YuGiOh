@@ -32,4 +32,6 @@ backgroundColor: '#392542',
     scene: [Presentacion,Menu,Tablero],
 } */
 
+
+//use command "npm install @azerion/phaser-input --save-dev" to install imput plugin
 var game = new Phaser.Game(configuracion);
