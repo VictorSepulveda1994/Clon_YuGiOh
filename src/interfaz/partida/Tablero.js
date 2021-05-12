@@ -7,12 +7,13 @@ class Tablero extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('cartaAux','./assets/chungo.png');
+        this.load.json('json', './src/datos/baseDeDatos.json');
+        this.load.image('Chungungo','./assets/chungo.png');
         this.load.image('reversoCarta','./assets/reversoCarta.png');
-        this.load.image('carabineroExpresivo','/assets/carabineroExpresivo.png');
-        this.load.image('investigacionAFondo','/assets/investigacionAFondo.png');
+        this.load.image('carabinero expresivo','/assets/carabineroExpresivo.png');
+        this.load.image('investigacion a fondo','/assets/investigacionAFondo.png');
         this.load.image('trauco','/assets/trauco.png');
-        this.load.image('bonoDePresidente','/assets/bonoDePresidente.png');
+        this.load.image('bono de presidente','/assets/bonoDePresidente.png');
 
     }
     cambiarVisualizacion(nombreCarta){
@@ -20,8 +21,13 @@ class Tablero extends Phaser.Scene {
         var imagen = this.add.image(0,0,nombreCarta);
         this.container.add(imagen);
     }
+    
+    
+    
+
+    
+    
     create() {
-        
         let self = this;
 
         
@@ -37,26 +43,49 @@ class Tablero extends Phaser.Scene {
 
         
         this.container = this.add.container(1440,300);
-        
+
+        /**
+        * Funcion para verificar correctamente el fin de la partida 
+        * casos como quedar sin cartas
+        *            quedar sin puntos de vida
+        *            derrotar al oponente
+        * interfiere con las funciones
+        *   quitarPuntosUsuario
+        *   quitarPuntosOponente
+        *   quitarCartasMazo
+        */
+         this.verificarEstadoPartida=()=>{
+            if(numeroCartasUsuario == 0 && this.botonQuitarCartaMazo != null){
+               alert("Perdiste, has quedado sin cartas");
+               this.botonQuitarCartaMazo.destroy();
+            }
+            if(vidaUsuario <= 0 && this.puntosUsuario != null){
+                alert("Perdiste, has quedado sin puntos de vida");
+                this.puntosUsuario.destroy();
+            }
+            if(vidaOponente <= 0 && this.puntosOponente != null){
+                alert("Ganaste, el oponente ha quedado sin puntos de vida");
+                this.puntosOponente.destroy();
+            }
+        };
         
         
         /**
          * funcion que da 5 cartas por el momento no posee logica requerida
          * para el completo manejo de una mano del usuario
          */
-        this.cartas = [
-            'cartaAux',
-            'carabineroExpresivo',
-            'investigacionAFondo',
-            'trauco',
-            'bonoDePresidente'
-        ];
+
+        this.objeto = this.cache.json.get('json');
+        this.cartasMano = []; 
         
         this.darCartas = () => {
             for (let i = 0; i < 5; i++) {
-                var cartaJugador = new carta(this);
-                cartaJugador.render(1300+(i*50),650,this.cartas[i]);
+                var cartaJugador = new carta(this,this.objeto.carta[i].tipo);
+                
+                this.cartasMano.push(cartaJugador);
+                cartaJugador.render(1300+(i*50),650,this.objeto.carta[i].nombre);
             }
+            
         }
         /**
          * Funciones para el inicio de una partida
@@ -67,15 +96,64 @@ class Tablero extends Phaser.Scene {
 
         this.darTexto.on('pointerdown',function(){
             self.darCartas();
-        })
+        });
 
         this.darTexto.on('pointerout',function(){
             self.darTexto.setColor('#00ff00');
-        })
+        });
 
         this.darTexto.on('pointerover',function(){
             self.darTexto.setColor('#0000ff');
-        })
+        });
+
+        this.buscarZonaDisponible = (tipo) => {
+            if(tipo == 'Monstruo'){
+                for(let i = 13; i < 18; i++){
+                    if(self.renderCartas[i].data.values.cards == 0){
+                        return i;
+                    }
+                    
+                }
+            }else{
+                for(let i = 19; i < 24; i++){
+                    if(self.renderCartas[i].data.values.cards == 0){
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+    
+        this.colocarCarta = (cartaMano,_tipo) => {
+            var index = this.buscarZonaDisponible(_tipo);
+        
+            if(index != -1){
+                console.log("colocar carta");
+                self.renderCartas[index].data.values.cards++;
+                cartaMano.x = self.renderCartas[index].x;
+                cartaMano.y = self.renderCartas[index].y;
+                cartaMano.input.draggable = false;
+                
+            }            
+        }
+        
+        this.colocarReverso = (cartaMano,_tipo) => {
+            var index = this.buscarZonaDisponible(_tipo);
+
+            if(index != -1){
+                console.log("colocar reverso");
+                self.renderCartas[index].data.values.cards++;
+                cartaMano.x = self.renderCartas[index].x;
+                cartaMano.y = self.renderCartas[index].y;
+                cartaMano.disableInteractive();
+                var reverso = new carta(this,_tipo);
+                reverso.render(self.renderCartas[index].x,self.renderCartas[index].y,'reversoCarta').disableInteractive();
+                
+            }
+            
+            
+    
+        }
 
         
         /**
@@ -85,6 +163,7 @@ class Tablero extends Phaser.Scene {
          * cartas en el juego.
          * 
          */
+
         
 
         this.coordenadas = [
@@ -144,7 +223,7 @@ class Tablero extends Phaser.Scene {
          * 
          * Por el momento no discrimina zonas de usuario y adversario
          */
-         this.input.on('drop', function (pointer, gameObject, dropZone) {      
+         /*this.input.on('drop', function (pointer, gameObject, dropZone) {      
             console.log(gameObject.x + ","+gameObject.y );
             console.log(dropZone.x + ","+dropZone.y );
             if(dropZone.data.values.cards==0){
@@ -157,7 +236,7 @@ class Tablero extends Phaser.Scene {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-        })
+        })*/
 
 
         /**
@@ -208,8 +287,9 @@ class Tablero extends Phaser.Scene {
                 self.setValorBarra(barraOponente,vidaOponente);
             }else if(vidaOponente<=0){
                 self.setValorBarra(barraOponente,0);
-                this.puntosOponente.destroy();
+                
             }
+            this.verificarEstadoPartida();   
         }
         this.puntosOponente=this.add.text(550,330,['oponente']).setFontSize(13).setColor('#00ff00').setInteractive();
 
@@ -222,8 +302,9 @@ class Tablero extends Phaser.Scene {
                 self.setValorBarra(barraUsuario,vidaUsuario);
             }else if(vidaUsuario<=0){
                 self.setValorBarra(barraUsuario,0);
-                this.puntosUsuario.destroy();
-            }            
+                
+            }
+            this.verificarEstadoPartida();            
         }
        this.puntosUsuario=this.add.text(650,330,['usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
 
@@ -244,8 +325,8 @@ class Tablero extends Phaser.Scene {
          
         
 
-         mazoUsuario.render(993.5,620,'reversoCarta').disableInteractive();;
-         mazoOponente.render(222.5,90,'reversoCarta').disableInteractive();;
+         mazoUsuario.render(993.5,620,'reversoCarta').disableInteractive();
+         mazoOponente.render(222.5,90,'reversoCarta').disableInteractive();
 
          
  
@@ -267,6 +348,7 @@ class Tablero extends Phaser.Scene {
              }else{
                 this.textoMazoUsuario.setText([numeroCartasUsuario]);
              }
+             this.verificarEstadoPartida();   
              console.log(numeroCartasUsuario);
          }
          this.botonQuitarCartaMazo=this.add.text(950,670,['mazo usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
@@ -276,6 +358,8 @@ class Tablero extends Phaser.Scene {
             
 
     }
+
+    
     
     
 

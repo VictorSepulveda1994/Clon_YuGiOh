@@ -4,7 +4,15 @@
  * tambien recibe un sprite a base de una imagen previa 
  */
 class carta{
-    constructor(scene){
+    
+    constructor(scene,tipo){
+        var _tipo = tipo;
+        this.textoCreado = false;
+        
+        
+
+
+        self = this;
         this.render = (x,y,sprite) =>{
             var carta = scene.add.image(x,y,sprite).setScale(0.35,0.35).setInteractive();
             scene.input.setDraggable(carta);
@@ -35,9 +43,71 @@ class carta{
                 }
             });
 
-            carta.on('pointerdown', function(){
+            carta.on('pointerdown', function(pointer){
                 scene.cambiarVisualizacion(sprite);
+                
             })
+            
+            carta.on('pointerup',function(pointer){
+                
+                
+                if (!self.textoCreado) {
+                    console.log('Generar botones');
+                    self.textoCreado = true;
+                    console.log('Crear cartas');
+                    var text1 = scene.add.text(carta.x+35,pointer.y,['Invocar']).setFontSize(13).setColor('#00ff00').setInteractive().on('pointerdown',function(){
+                
+                        scene.colocarCarta(carta,_tipo);
+
+                        text1.destroy();
+                        text2.destroy();
+                        text3.destroy();
+                        text1 = null;
+                        text2 = null;
+                        text3 = null;
+                        self.textoCreado = false;
+                        
+                    });
+                    var text2 = scene.add.text(carta.x+35,pointer.y+20,['Colocar']).setFontSize(13).setColor('#00ff00').setInteractive().on('pointerdown',function(){
+                        
+                        scene.colocarReverso(carta,_tipo);
+
+                        text1.destroy();
+                        text2.destroy();
+                        text3.destroy();
+                        text1 = null;
+                        text2 = null;
+                        text3 = null;
+                        self.textoCreado = false;
+                        
+                    });
+    
+                    var text3 = scene.add.text(carta.x+35,pointer.y+40,['Cancelar']).
+                    setFontSize(13).
+                    setColor('#00ff00').
+                    setInteractive().
+                    on('pointerdown',function(){
+                        
+                        
+                        text1.destroy();
+                        text2.destroy();
+                        text3.destroy();
+                        text1 = null;
+                        text2 = null;
+                        text3 = null;
+                        self.textoCreado = false;
+                        
+                    });
+                }
+                
+                
+                
+            
+            })
+            
+            
+
+            
             return carta;
         }
     }
