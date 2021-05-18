@@ -17,7 +17,7 @@ class CartaBase extends Phaser.GameObjects.Container
             imagenNivel
         }= data;
         let spriteCarta= new Phaser.GameObjects.Sprite(scene,0,0,carta);
-        let spriteImagen= new Phaser.GameObjects.Sprite(scene,-4,-15,imagen);
+        let spriteImagen= new Phaser.GameObjects.Sprite(scene,-3,-15,imagen);
         let textoNombre= new Phaser.GameObjects.Text(scene,-96,-165,nombre,{color: '#000000', fontSize:17});
         let textoClase= new Phaser.GameObjects.Text(scene,-100,100,"["+clase+"]",{color: '#000000', fontSize:12});
         let textoDescripcion= new Phaser.GameObjects.Text(scene,-95,112,descripcion,{color: '#000000', fontSize:11});
@@ -152,6 +152,7 @@ class CartaBase extends Phaser.GameObjects.Container
         if(tipo=="normal")
         {
             this.tipo= "normal";
+            this.textoClase.setText("Carta Monstruo");
             this.textoAtaque.setVisible(true);
             this.textoDefensa.setVisible(true);
             this.spriteCarta.setTexture('cartaNormal');
@@ -159,6 +160,7 @@ class CartaBase extends Phaser.GameObjects.Container
         if(tipo=="efecto")
         {
             this.tipo= "efecto";
+            this.textoClase.setText("Carta Efecto");
             this.textoAtaque.setVisible(true);
             this.textoDefensa.setVisible(true);
             this.spriteCarta.setTexture('cartaEfecto');
@@ -167,6 +169,7 @@ class CartaBase extends Phaser.GameObjects.Container
         {
             this.cambiarNivel(0);
             this.tipo= "magica";
+            this.textoClase.setText("Carta Magica");
             this.textoAtaque.setVisible(false);
             this.textoDefensa.setVisible(false);
             this.spriteCarta.setTexture('cartaMagica');
@@ -174,6 +177,7 @@ class CartaBase extends Phaser.GameObjects.Container
         if(tipo=="trampa")
         {
             this.cambiarNivel(0);
+            this.textoClase.setText("Carta Trampa");
             this.tipo= "trampa";
             this.textoAtaque.setVisible(false);
             this.textoDefensa.setVisible(false);
