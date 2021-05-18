@@ -1,3 +1,7 @@
+/**
+ * Phaser 3 tutorial- Recuperado de un video
+ * https://www.youtube.com/watch?v=tIaXbRzjyqk
+ */
 class CartaBase extends Phaser.GameObjects.Container
 {
     constructor(data)

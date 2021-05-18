@@ -45,7 +45,7 @@ class CrearCarta extends Phaser.Scene
             this.sprites.push({ s: image, r: 1 + Math.random() * 2 });
         }
 
-        this.carta= new CartaBase
+        this.carta= new CartaDraggable
         ({
             scene: this,
             x:200,
@@ -58,7 +58,8 @@ class CrearCarta extends Phaser.Scene
             ataque:500,
             defensa:500,
             nivel:4,
-            imagenNivel:'nivel'
+            imagenNivel:'nivel',
+            ondragend: (pointer,gameObject)=>{}
         });
 
 
