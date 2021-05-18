@@ -1,8 +1,6 @@
 class CrearCarta extends Phaser.Scene
 {
-    _carta= Carta;
-    _imagenCarta=null;
-    _imagenFondo=null;
+    
     constructor()
     {
         super({key: "crearCarta"});
@@ -10,9 +8,15 @@ class CrearCarta extends Phaser.Scene
 
     preload()
     {
-        
-
         this.sprites = [];
+        this.load.image('particula', 'assets/white.png');
+        this.load.image('cartaEfecto','assets/cartaEfecto.png');
+        this.load.image('cartaNormal','assets/cartaNormal.png');
+        this.load.image('cartaTrampa','assets/cartaTrampa.png');
+        this.load.image('cartaMagica','assets/cartaMagica.png');
+        this.load.image('default','assets/imagenes/default.jpg');
+        this.load.image('nivel','assets/nivel.png');
+
         this.load.image('menos', 'assets/menos.png');
         this.load.image('mas', 'assets/mas.png');
         this.load.image('monstruo', 'assets/icon_monstruo.png');
@@ -20,19 +24,14 @@ class CrearCarta extends Phaser.Scene
         this.load.image('magica', 'assets/icon_magica.png');
         this.load.image('trampa', 'assets/icon_trampa.png');
         this.load.image('particula', 'assets/white.png');
-        this.load.image('imagen_carta_default','assets/imagenes/default.jpg');
         this.load.image('panel_carta','assets/panelCarta.png');
         this.load.image('add_imagen','assets/add_imagen.png');
-        this.load.image('carta1', 'assets/carta_monstruo.PNG');
-        this.load.image('carta2', 'assets/carta_efecto.PNG');
-        this.load.image('carta3', 'assets/carta_magica.PNG');
-        this.load.image('carta4', 'assets/carta_trampa.PNG');
-        this.load.image('addTitulo', 'assets/agregarTitulo.PNG');
-        this.load.image('addDescripcion', 'assets/agregarDescripcion.PNG');
         this.load.image('upA', 'assets/upattack.PNG');
         this.load.image('downA', 'assets/downattack.PNG');
         this.load.image('upD', 'assets/updefense.PNG');
         this.load.image('downD', 'assets/downdefense.PNG');
+        this.load.image('addTitulo', 'assets/agregarTitulo.PNG');
+        this.load.image('addDescripcion', 'assets/agregarDescripcion.PNG');
     }
     
     create()
@@ -46,159 +45,125 @@ class CrearCarta extends Phaser.Scene
             this.sprites.push({ s: image, r: 1 + Math.random() * 2 });
         }
 
-        const _carta= new Carta(100, 150, "monstruo");
-        this._carta=_carta;
+        this.carta= new CartaBase
+        ({
+            scene: this,
+            x:200,
+            y:300,
+            nombre:"NOMBRE CARTA",
+            carta:'cartaNormal',
+            imagen:'default',
+            clase:"ClaseCarta",
+            descripcion:"xxxxxxx xxxxxx xxxxxxxxx",
+            ataque:500,
+            defensa:500,
+            nivel:4,
+            imagenNivel:'nivel'
+        });
 
-        const _imagenFondo=this.add.image(200,330,"carta1");
-        this._imagenFondo= _imagenFondo;
 
         //panel
-        const panel= this.add.image(620,350,'panel_carta');
-        panel.setDisplaySize(400,500);
-        const icon1= this.add.image(500,200,'monstruo');
-        icon1.setScale(0.7);
-        const icon2= this.add.image(580,200,'efecto');
-        icon2.setScale(0.7);
-        const icon3= this.add.image(660,200,'magica');
-        icon3.setScale(0.7);
-        const icon4= this.add.image(740,200,'trampa');
-        icon4.setScale(0.7);
-        const mas= this.add.image(520,300,'mas');
-        mas.setScale(0.2);
-        const menos= this.add.image(520,360,'menos');
-        menos.setScale(0.2);
-        const add_imagen= this.add.image(650,330,'add_imagen');
-        add_imagen.setDisplaySize(100,100);
-        const add_titulo= this.add.image(520,450,'addTitulo');
-        add_titulo.setDisplaySize(100,100);
-        const add_descripcion= this.add.image(520,530,'addDescripcion');
-        add_descripcion.setDisplaySize(90,90);
-        const upA= this.add.image(630,460,'upA');
-        upA.setDisplaySize(90,90);
-        const downA= this.add.image(720,460,'downA');
-        downA.setDisplaySize(90,90);
-        const upD= this.add.image(630,540,'upD');
-        upD.setDisplaySize(90,90);
-        const downD= this.add.image(730,540,'downD');
-        downD.setDisplaySize(90,90);
+        this.panel= this.add.image(620,350,'panel_carta');
+        this.panel.setDisplaySize(400,500);
+        this.icon1= this.add.image(500,200,'monstruo');
+        this.icon1.setScale(0.7);
+        this.icon2= this.add.image(580,200,'efecto');
+        this.icon2.setScale(0.7);
+        this.icon3= this.add.image(660,200,'magica');
+        this.icon3.setScale(0.7);
+        this.icon4= this.add.image(740,200,'trampa');
+        this.icon4.setScale(0.7);
+        this.mas= this.add.image(520,300,'mas');
+        this.mas.setScale(0.2);
+        this.menos= this.add.image(520,360,'menos');
+        this.menos.setScale(0.2);
+        this.add_imagen= this.add.image(650,330,'add_imagen');
+        this.add_imagen.setDisplaySize(100,100);
+        this.add_titulo= this.add.image(520,450,'addTitulo');
+        this.add_titulo.setDisplaySize(100,100);
+        this.add_descripcion= this.add.image(520,530,'addDescripcion');
+        this.add_descripcion.setDisplaySize(90,90);
+        this.upA= this.add.image(630,460,'upA');
+        this.upA.setDisplaySize(90,90);
+        this.downA= this.add.image(720,460,'downA');
+        this.downA.setDisplaySize(90,90);
+        this.upD= this.add.image(630,540,'upD');
+        this.upD.setDisplaySize(90,90);
+        this.downD= this.add.image(730,540,'downD');
+        this.downD.setDisplaySize(90,90);
 
-        var textNivel= this.add.text(200,195,"",{color: '#000000', fontSize:12});
-        var textAtaque= this.add.text(170,478,"ATQ/"+this._carta.getAtaque(),{color: '#000000', fontSize:12});
-        var textDefensa= this.add.text(230,478  ,"DEF/"+this._carta.getDefensa(),{color: '#000000', fontSize:12});
-
-        var _imagenCarta= this.add.image(195,313,"imagen_carta_default");
-        _imagenCarta.setDisplaySize(200 *1,450*0.45);
-
-        icon1.setInteractive();
-        icon1.on("pointerup", ()=>{
-            const _imagenFondo=this.add.image(200,330,"carta1");
-            this._imagenFondo= _imagenFondo;
-            _carta.setTipo("monstruo");
-            mas.setVisible(true);
-            menos.setVisible(true);
-            upA.setVisible(true);
-            upD.setVisible(true);
-            downA.setVisible(true);
-            downD.setVisible(true);
-            textAtaque= this.add.text(170,478,"ATQ/"+this._carta.getAtaque(),{color: '#000000', fontSize:12});
-            textDefensa= this.add.text(230,478,"DEF/"+this._carta.getDefensa(),{color: '#000000', fontSize:12});
-            this._carta=_carta;
-            _imagenCarta= this.add.image(195,313,"imagen_carta_default");
-            _imagenCarta.setDisplaySize(200 *1,450*0.45);
+        this.icon1.setInteractive();
+        this.icon1.on("pointerup", ()=>{
+            this.mas.setVisible(true);
+            this.menos.setVisible(true);
+            this.upA.setVisible(true);
+            this.upD.setVisible(true);
+            this.downA.setVisible(true);
+            this.downD.setVisible(true);
+            this.carta.cambiarTipo("normal");
         })
 
-        icon2.setInteractive();
-        icon2.on("pointerup", ()=>{
-            const _imagenFondo=this.add.image(200,332,"carta2");
-            this._imagenFondo= _imagenFondo;
-            _carta.setTipo("efecto");
-            mas.setVisible(true);
-            menos.setVisible(true);
-            upA.setVisible(true);
-            upD.setVisible(true);
-            downA.setVisible(true);
-            downD.setVisible(true);
-            textAtaque= this.add.text(170,478,"ATQ/"+this._carta.getAtaque(),{color: '#000000', fontSize:12});
-            textDefensa= this.add.text(230,478,"DEF/"+this._carta.getDefensa(),{color: '#000000', fontSize:12});
-            this._carta=_carta;
-            _imagenCarta= this.add.image(195,313,"imagen_carta_default");
-            _imagenCarta.setDisplaySize(200 *1,450*0.45);
+        this.icon2.setInteractive();
+        this.icon2.on("pointerup", ()=>{
+            this.mas.setVisible(true);
+            this.menos.setVisible(true);
+            this.upA.setVisible(true);
+            this.upD.setVisible(true);
+            this.downA.setVisible(true);
+            this.downD.setVisible(true);
+            this.carta.cambiarTipo("efecto");
         })
 
-        icon3.setInteractive();
-        icon3.on("pointerup", ()=>{
-            const _imagenFondo=this.add.image(200,330,"carta3");
-            this._imagenFondo= _imagenFondo;
-            _carta.setTipo("magica");
-            textNivel= this.add.text(200,195,"[CARTA MAGICA]",{color: '#000000', fontSize:12});
-            mas.setVisible(false);
-            menos.setVisible(false);
-            upA.setVisible(false);
-            upD.setVisible(false);
-            downA.setVisible(false);
-            downD.setVisible(false);
-            textAtaque= this.add.text(170,478,"",{color: '#000000', fontSize:12});
-            textDefensa= this.add.text(170,478,"",{color: '#000000', fontSize:12});
-            this._carta=_carta;
-            _imagenCarta= this.add.image(195,313,"imagen_carta_default");
-            _imagenCarta.setDisplaySize(200 *1,450*0.45);
+        this.icon3.setInteractive();
+        this.icon3.on("pointerup", ()=>{
+            this.mas.setVisible(false);
+            this.menos.setVisible(false);
+            this.upA.setVisible(false);
+            this.upD.setVisible(false);
+            this.downA.setVisible(false);
+            this.downD.setVisible(false);
+            this.carta.cambiarTipo("magica");
         })
 
-        icon4.setInteractive();
-        icon4.on("pointerup", ()=>{
-            const _imagenFondo=this.add.image(200,330,"carta4");
-            this._imagenFondo= _imagenFondo;
-            _carta.setTipo("trampa");
-            textNivel= this.add.text(200,195,"[CARTA TRAMPA]",{color: '#000000', fontSize:12});
-            mas.setVisible(false);
-            menos.setVisible(false);
-            upA.setVisible(false);
-            upD.setVisible(false);
-            downA.setVisible(false);
-            downD.setVisible(false);
-            textAtaque= this.add.text(170,478,"",{color: '#000000', fontSize:12});
-            textDefensa= this.add.text(170,478,"",{color: '#000000', fontSize:12});
-            this._carta=_carta;
-            _imagenCarta= this.add.image(195,313,"imagen_carta_default");
-            _imagenCarta.setDisplaySize(200 *1,450*0.45);
+        this.icon4.setInteractive();
+        this.icon4.on("pointerup", ()=>{
+            this.mas.setVisible(false);
+            this.menos.setVisible(false);
+            this.upA.setVisible(false);
+            this.upD.setVisible(false);
+            this.downA.setVisible(false);
+            this.downD.setVisible(false);
+            this.carta.cambiarTipo("trampa");
         })
 
-        var label = this.add.text(500, 330, "", { font: "24px Arial Black", fill: "#c51b7d" });
-        label.setStroke('#de77ae', 8);
-        label.setVisible(false);
-
-        mas.setInteractive();
-        mas.on("pointerup", ()=>{
-            this._carta.masNivel();
+        this.mas.setInteractive();
+        this.mas.on("pointerup", ()=>{
+            this.carta.cambiarNivel(this.carta.nivel+1);
         })
        
-        menos.setInteractive();
-        menos.on("pointerup", ()=>{
-            this._carta.menosNivel();
+        this.menos.setInteractive();
+        this.menos.on("pointerup", ()=>{
+            this.carta.cambiarNivel(this.carta.nivel-1);
         })
 
-        upA.setInteractive();
-        upA.on("pointerup", ()=>{
-            this._carta.masAtaque();
-            textAtaque.setText("ATQ/"+this._carta.getAtaque());
+        this.upA.setInteractive();
+        this.upA.on("pointerup", ()=>{
+            this.carta.cambiarAtaque(this.carta.ataque+100);
         })
        
-        downA.setInteractive();
-        downA.on("pointerup", ()=>{
-            this._carta.menosAtaque();
-            textAtaque.setText("ATQ/"+this._carta.getAtaque());
+        this.downA.setInteractive();
+        this.downA.on("pointerup", ()=>{
+            this.carta.cambiarAtaque(this.carta.ataque-100);
         })
 
-        upD.setInteractive();
-        upD.on("pointerup", ()=>{
-            this._carta.masDefensa();
-            textDefensa.setText("DEF/"+this._carta.getDefensa());
+        this.upD.setInteractive();
+        this.upD.on("pointerup", ()=>{
+            this.carta.cambiarDefensa(this.carta.defensa+100);
         })
        
-        downD.setInteractive();
-        downD.on("pointerup", ()=>{
-            this._carta.menosDefensa();
-            textDefensa.setText("DEF/"+this._carta.getDefensa());
+        this.downD.setInteractive();
+        this.downD.on("pointerup", ()=>{
+            this.carta.cambiarDefensa(this.carta.defensa-100);
         })
     }
 
