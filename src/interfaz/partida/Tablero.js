@@ -273,6 +273,7 @@ class Tablero extends Phaser.Scene {
         /**
          * ciclo para la creacion de las zonas y sus respectivas renderizaciones
          */
+        
         for(let i=0; i<26; i++){
             this.zonaAux = new Zona(this, this.coordenadas[i].x, this.coordenadas[i].y, this.coordenadas[i].color);
             
