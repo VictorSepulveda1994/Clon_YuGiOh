@@ -28,7 +28,7 @@ const configuracion = {
         height: 720,
 
     },
-    scene: [Presentacion,Menu,Tablero],
+    scene: [Presentacion,Menu,Tablero,CrearCarta],
     
     callbacks:{
         postBoot: function (game) {
