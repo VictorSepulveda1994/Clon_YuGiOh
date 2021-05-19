@@ -1,0 +1,26 @@
+{
+    "jugador":[
+        { "ip":"" },
+        { "ip":"" }
+    ],
+    "carta":[
+        { "id":"50332788","nombre":"chungungo","descripción":"aaa","imagen":"./assets/chungo.png","habilidad":"-","tipo":"monstruo","Estrellas":2,"Ataque":100,"Defensa":100,"Clase":"Animal" },
+        { "id":"50332788","nombre":"carabinero expresivo","descripción":"un dia normal en el trabajo puede ser mejor aun con un saludo de tu amigo carabinero","imagen":"./assets/carabineroExpresivo.png","habilidad":"-","tipo":"monstruo","Estrellas":4,"Ataque":900,"Defensa":900,"Clase":"Humano/institucion" },
+        { "id":"50332788","nombre":"trauco","descripción":"Se dice que el trauco busca mujeres jovenes por las noches para embarazarlas y nunca más volver, algo asi como el padre de algunas personas.","imagen":"./assets/trauco.png","habilidad":"+300 de ataque (Leyenda)","tipo":"monstruo","Estrellas":4,"Ataque":1400,"Defensa":300,"Clase":"Leyenda/duende" },
+        { "id":"50332788","nombre":"bono de presidente","descripción":"Un bono para la gente que más lo necesita, si seguimos así nadie tendra que trabajar, épico","imagen":"./assets/bonoDePresidente.png","habilidad":"+900 de ataque y defensa","tipo":"magica","Estrellas":0,"Ataque":0,"Defensa":0,"Clase":"" },
+        { "id":"50332788","nombre":"investigacion a fondo","descripción":"'te juro que la latita no es mia compa' -anonimo","imagen":"./assets/investigacionAFondo.png","habilidad":"-500 ataque (enemigo)(ataque<=0, destruye)","tipo":"trampa","Estrellas":0,"Ataque":0,"Defensa":0,"Clase":"" },
+        { "id":"","nombre":"","descripción":"","imagen":"","habilidad":"","tipo":"monstruo","Estrellas":1,"Ataque":100,"Defensa":200,"Clase":"Parasito" }
+    ],
+    "mazo":[
+        { "id":"","nombre":"","ref_jugador":"" },
+        { "id":"","nombre":"","ref_jugador":"" }
+    ],
+    "cartas_mazo":[
+        { "ref_mazo":"","ref_carta":"" },
+        { "ref_mazo":"","ref_carta":"" }
+    ],
+    "monstruos_creados":[
+        { "ref_monstruo":"","ref_jugador":"" },
+        { "ref_monstruo":"","ref_jugador":"" }
+    ]
+}

@@ -41,6 +41,8 @@ class Zona {
                     break;
                 case 4: dropZoneOutline.lineStyle(2, 0x808080); // gris
                     break;
+                case 5: dropZoneOutline.lineStyle(2, 0x00bcd4); // cyan
+                    break;
             }
             dropZoneOutline.strokeRect(x, y, dropZone.input.hitArea.width, dropZone.input.hitArea.height)
         }
