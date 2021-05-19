@@ -1,0 +1,23 @@
+********************************
+Phaser in Vscode install guide
+********************************
+In browser...
+install vscode (https://ninite.com or other)
+install node.js (https://nodejs.org/en/)
+
+In cmd...
+verify in cmd (use command: "node -v")
+install npm in cmd (use command "npm install npm@latest -g")
+verify in cmd (use command: "npm -v")
+
+In Vscode...
+activate vscode with institutional mail (blabla@alumnos.utalca.cl)
+use console terminal in vscode (with "ctrl + ñ")
+write in VS console: "npm init -y"
+write in VS console: "npm install --save phaser"
+
+In browser again...
+install livereload. It's not necessary https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
+
+Continue in video...
+https://youtu.be/mvAbWWn1cTk?list=PLL_H5w4KA8dP9pPayzYxHCD4IQ80nkfY9&t=120
