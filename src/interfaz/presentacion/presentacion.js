@@ -7,6 +7,10 @@ class Presentacion extends Phaser.Scene
     {
         super({key: "presentacion"});
         this.sprites = [];
+        
+        
+        
+
     }
     
     preload ()
@@ -23,7 +27,7 @@ class Presentacion extends Phaser.Scene
         //  Create the particles
         for (var i = 0; i < 300; i++)
         {
-            const x = Phaser.Math.Between(-500, 1000);
+            const x = Phaser.Math.Between(-500, 1700);
             const y = Phaser.Math.Between(-500, 1000);
 
             const image = this.add.image(x, y, 'particula');
@@ -34,7 +38,7 @@ class Presentacion extends Phaser.Scene
             this.sprites.push({ s: image, r: 4 + Math.random() * 9 });
         }
 
-        this.add.image(490, 350, 'logo').setBlendMode(Phaser.BlendModes.COLOR_BURN);
+        this.add.image(900, 350, 'logo').setBlendMode(Phaser.BlendModes.COLOR_BURN);
 
         //Para cambiar de escena
         this.input.on('pointerdown', function () 

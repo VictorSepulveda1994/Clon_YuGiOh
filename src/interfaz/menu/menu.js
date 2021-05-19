@@ -26,7 +26,7 @@ class Menu extends Phaser.Scene
         //Particulas del fondo
         for (var i = 0; i < 300; i++)
         {
-            const x = Phaser.Math.Between(-500, 1000);
+            const x = Phaser.Math.Between(-500, 1700);
             const y = Phaser.Math.Between(-500, 1000);
 
             const image = this.add.image(x, y, 'particula');
@@ -51,7 +51,7 @@ class Menu extends Phaser.Scene
         punteroIcon.setVisible(false);
 
         //Botón jugar---------------------------------------------------
-        var jugar = this.add.image(200, 270,'Jugar')
+        var jugar = this.add.image(600, 270,'Jugar')
         jugar.setScale(0.2);
         jugar.setName('Jugar');
         jugar.setDepth(0);
@@ -82,7 +82,7 @@ class Menu extends Phaser.Scene
         })
 
         //Botón crear carta-----------------------------------------------
-        var crearCarta = this.add.image(450, 310,'Crear carta');
+        var crearCarta = this.add.image(850, 310,'Crear carta');
         crearCarta.setScale(0.7);
         crearCarta.setName('Crear Carta');
         crearCarta.setDepth(0);
@@ -113,7 +113,7 @@ class Menu extends Phaser.Scene
         })
 
         //Botón crear mazo---------------------------------------------
-        var crearMazo = this.add.image(700, 300,'Crear mazo');
+        var crearMazo = this.add.image(1100, 300,'Crear mazo');
         crearMazo.setScale(0.5);
         crearMazo.setName('Crear Mazo');
         crearMazo.setDepth(0);
