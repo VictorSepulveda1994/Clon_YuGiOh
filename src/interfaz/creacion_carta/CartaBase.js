@@ -150,7 +150,7 @@ class CartaBase extends Phaser.GameObjects.Container
 
     /**
      * Cambia el tipo de carta, hace visible o invisible los objetos dentro de la carta segun corresponda
-     * 
+     * @param tipo texto que indica a que tipo de carta pertenece
      */
     cambiarTipo(tipo)
     {
