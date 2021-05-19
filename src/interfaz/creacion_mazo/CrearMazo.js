@@ -1,17 +1,17 @@
+import { RestartButton } from "../components/restart-button.js";
+
 class CrearMazo extends Phaser.Scene {
     constructor() {
         super({key: "CrearMazo", active: true});
-        var button;
-        var background;
+
     }
 
     preload() {
-
+      this.restartButton.preload();
     }
 
-
     create() {
- 
+        this.restartButton.create();
         this.clickCountText = this.add.text(100, 200, '');        
         let graphics = this.add.graphics();
         graphics.fillStyle(0xFF977D, 1);
@@ -19,7 +19,7 @@ class CrearMazo extends Phaser.Scene {
         let clickCount = 0;
         this.clickCountText = this.add.text(100, 200, '');
     
-        this.clickButton = this.add.text(1050, 100, 'Click me!', { fill: '#0f0' })
+        this.clickButton = this.add.text(1050, 100, 'Crear mazo', { fill: '#0f0' })
           .setInteractive({ useHandCursor: true })
           .on('pointerover', () => this.enterButtonHoverState() )
           .on('pointerout', () => this.enterButtonRestState() )
@@ -33,7 +33,8 @@ class CrearMazo extends Phaser.Scene {
       }
     
       updateClickCountText(clickCount) {
-        this.clickCountText.setText(`Button has been clicked ${clickCount} times.`);
+        this.clickCountText.setText(`Haz creado ${clickCount} mazos.`);
+        //this.scene.start('EditarMazo');
       }
     
       enterButtonHoverState() {
@@ -47,10 +48,6 @@ class CrearMazo extends Phaser.Scene {
       enterButtonActiveState() {
         this.clickButton.setStyle({ fill: '#0ff' });
       }
-
-    
-
-
 
     update(time, delta) {
 
