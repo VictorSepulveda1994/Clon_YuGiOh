@@ -8,16 +8,16 @@ class Tablero extends Phaser.Scene {
 
     preload() {
         this.load.json('json', './src/datos/baseDeDatos.json');
-        this.load.image('Chungungo','./assets/chungo.png');
+        this.load.image('chungungo','./assets/chungo.png');
         this.load.image('reversoCarta','./assets/reversoCarta.png');
-        this.load.image('carabinero expresivo','/assets/carabineroExpresivo.png');
-        this.load.image('investigacion a fondo','/assets/investigacionAFondo.png');
-        this.load.image('trauco','/assets/trauco.png');
-        this.load.image('bono de presidente','/assets/bonoDePresidente.png');
+        this.load.image('carabinero expresivo','./assets/carabineroExpresivo.png');
+        this.load.image('investigacion a fondo','./assets/investigacionAFondo.png');
+        this.load.image('trauco','./assets/trauco.png');
+        this.load.image('bono de presidente','./assets/bonoDePresidente.png');
 
     }
     cambiarVisualizacion(nombreCarta){
-        console.log(nombreCarta);
+
         var imagen = this.add.image(0,0,nombreCarta);
         this.container.add(imagen);
     }
@@ -31,7 +31,6 @@ class Tablero extends Phaser.Scene {
         let self = this;
 
         
-            
         this.linea1 = this.add.graphics();
         this.linea1.fillStyle(0xffffff,1);
         this.linea1.fillRect(0,360,1200,1);
@@ -40,8 +39,6 @@ class Tablero extends Phaser.Scene {
         this.linea2.fillStyle(0xffffff,1);
         this.linea2.fillRect(1200,0,1,720);
 
-
-        
         this.container = this.add.container(1440,300);
 
         /**
@@ -55,17 +52,51 @@ class Tablero extends Phaser.Scene {
         *   quitarCartasMazo
         */
          this.verificarEstadoPartida=()=>{
-            if(numeroCartasUsuario == 0 && this.botonQuitarCartaMazo != null){
-               alert("Perdiste, has quedado sin cartas");
+            if(numeroCartasUsuario == 0){
                this.botonQuitarCartaMazo.destroy();
+               if(confirm("Perdiste, has quedadao sin cartas... ¿Quieres reiniciar el juego?. \n Cancelar devolvera al menu del juego")){
+                   
+                    //reiniciar juego
+                    this.registry.destroy();
+                    this.events.off();
+                    this.scene.restart(); 
+               }else{
+                    //Devolver a menu
+                    this.registry.destroy(); 
+                    this.events.off();
+                    this.scene.restart(); 
+                    this.scene.switch('menu');
+               }
             }
-            if(vidaUsuario <= 0 && this.puntosUsuario != null){
-                alert("Perdiste, has quedado sin puntos de vida");
+            if(vidaUsuario <= 0){
                 this.puntosUsuario.destroy();
+                if(confirm("Perdiste, has quedado sin puntos de vida... ¿Quieres reiniciar el juego?. \n Cancelar devolvera al menu del juego")){
+                    //reiniciar juego
+                    this.registry.destroy(); 
+                    this.events.off();
+                    this.scene.restart(); 
+                }else{
+                    //Devolver a menu
+                    this.registry.destroy(); 
+                    this.events.off();
+                    this.scene.restart(); 
+                    this.scene.switch('menu');
+                    }
             }
-            if(vidaOponente <= 0 && this.puntosOponente != null){
-                alert("Ganaste, el oponente ha quedado sin puntos de vida");
+            if(vidaOponente <= 0){
                 this.puntosOponente.destroy();
+                if(confirm("Ganaste, el oponente ha quedado sin puntos de vida... ¿Quieres reiniciar el juego?. \n Cancelar devolvera al menu del juego")){
+                    //reiniciar juego
+                    this.registry.destroy(); 
+                    this.events.off();
+                    this.scene.restart(); 
+                }else{
+                    //Devolver a menu
+                    this.registry.destroy(); 
+                    this.events.off();
+                    this.scene.restart(); 
+                    this.scene.switch('menu');
+                }
             }
         };
         
@@ -79,14 +110,22 @@ class Tablero extends Phaser.Scene {
         this.cartasMano = []; 
         
         this.darCartas = () => {
+             
             for (let i = 0; i < 5; i++) {
-                var cartaJugador = new carta(this,this.objeto.carta[i].tipo);
-                
+                let cartaJugador = new carta(this,this.objeto.carta[i].tipo, this.objeto.carta[i].Ataque,this.objeto.carta[i].Defensa,this.objeto.carta[i].Estrellas,this.objeto.carta[i].Clase, 'mano');
+                //cartaJugador._datosCarta._nombre  = this.objeto.carta[i].nombre;
+                //cartaJugador._datosCarta._tipo  = this.objeto.carta[i].tipo;
                 this.cartasMano.push(cartaJugador);
                 cartaJugador.render(1300+(i*50),650,this.objeto.carta[i].nombre);
+                
             }
             
         }
+
+        
+        
+        
+
         /**
          * Funciones para el inicio de una partida
          * por el momento es un boton tipo texto que inicializa con 5 cartas en el tablero (-->this.darcartas)
@@ -105,9 +144,16 @@ class Tablero extends Phaser.Scene {
         this.darTexto.on('pointerover',function(){
             self.darTexto.setColor('#0000ff');
         });
-
+        /**
+         * busca dentro de las zonas disponibles en tablero para colocar una carta
+         * diferencia entre los tipo para ubicarlos si es monstruo quedan en la parte
+         * superior, si son de otro tipo las ubicara en la parte inferior
+         * recibimos una variable "tipo" que dependera del tipo de la carta
+         * retornada una variable i ---> determina el index de una zona disponible
+         * retorna un -1 ---> si no existen zonas disponibles
+         */
         this.buscarZonaDisponible = (tipo) => {
-            if(tipo == 'Monstruo'){
+            if(tipo == 'monstruo'){
                 for(let i = 13; i < 18; i++){
                     if(self.renderCartas[i].data.values.cards == 0){
                         return i;
@@ -123,12 +169,21 @@ class Tablero extends Phaser.Scene {
             }
             return -1;
         }
-    
-        this.colocarCarta = (cartaMano,_tipo) => {
+        /**
+         * @param {*} cartaMano 
+         * @param {*} _tipo 
+         * 
+         * recibe cartaMano ---> objeto del tipo carta
+         *        _tipo ---> variable tipo de la clase carta 
+         * llama a funcion buscarZonaDisponible para determinar el index para
+         * invocar una carta, esta carta se ubicara en la posicion de la zona
+         * y esta carta deja de ser arrastable 
+         */
+        this.invocarCarta = (cartaMano,_tipo) => {
             var index = this.buscarZonaDisponible(_tipo);
         
             if(index != -1){
-                console.log("colocar carta");
+                
                 self.renderCartas[index].data.values.cards++;
                 cartaMano.x = self.renderCartas[index].x;
                 cartaMano.y = self.renderCartas[index].y;
@@ -136,25 +191,36 @@ class Tablero extends Phaser.Scene {
                 
             }            
         }
-        
+        /**
+         * @param {*} cartaMano 
+         * @param {*} _tipo 
+         * recibe cartaMano ---> objeto del tipo carta
+         *        _tipo ---> variable tipo de la clase carta 
+         * llama a funcion buscarZonaDisponible para determinar el index para
+         * colocar una carta, esta carta se ubicara en la posicion de la zona
+         * y esta carta deja de ser arrastable, y arriba de esta se ubicara una
+         * carta con el reverso de una carta para ocultarla
+         */
         this.colocarReverso = (cartaMano,_tipo) => {
             var index = this.buscarZonaDisponible(_tipo);
 
             if(index != -1){
-                console.log("colocar reverso");
+                
                 self.renderCartas[index].data.values.cards++;
                 cartaMano.x = self.renderCartas[index].x;
                 cartaMano.y = self.renderCartas[index].y;
-                cartaMano.disableInteractive();
-                var reverso = new carta(this,_tipo);
-                reverso.render(self.renderCartas[index].x,self.renderCartas[index].y,'reversoCarta').disableInteractive();
+                cartaMano.input.draggable = false;
+
+                var reverso = new carta(this,_tipo,'','','','','oculta');
+                if(_tipo!='monstruo'){
+                    reverso.render(self.renderCartas[index].x,self.renderCartas[index].y,'reversoCarta').setInteractive();
+                }else{
+                    reverso.render(self.renderCartas[index].x,self.renderCartas[index].y,'reversoCarta').setInteractive().setAngle(90);
+                }
                 
             }
-            
-            
-    
         }
-
+        
         
         /**
          * var coordenadas = arreglo
@@ -216,29 +282,6 @@ class Tablero extends Phaser.Scene {
             this.zonaCartas.push(this.zonaAux);
             this.renderCartas.push(this.renderAux);
         }
-        /**
-         * Funcion para dejar una carta en una zona especifica que el usuario desee
-         * esta ubicara al gameObject en este caso una carta, y la podra dejar en una 
-         * dropZone o zona ya creada, si esto no ocurre la carta volvera a la posicion inicial
-         * 
-         * Por el momento no discrimina zonas de usuario y adversario
-         */
-         /*this.input.on('drop', function (pointer, gameObject, dropZone) {      
-            console.log(gameObject.x + ","+gameObject.y );
-            console.log(dropZone.x + ","+dropZone.y );
-            if(dropZone.data.values.cards==0){
-                dropZone.data.values.cards++;
-                gameObject.x = dropZone.x ;
-                gameObject.y = dropZone.y ;
-                gameObject.input.draggable = false;
-                //gameObject.disableInteractive();
-            }else{
-                gameObject.x = gameObject.input.dragStartX;
-                gameObject.y = gameObject.input.dragStartY;
-            }
-        })*/
-
-
         /**
          * Creacion barras de vida 
          * dos barras de vida
@@ -322,34 +365,29 @@ class Tablero extends Phaser.Scene {
          var mazoUsuario = new carta(this);
          var mazoOponente = new carta(this);
         
-         
-        
-
          mazoUsuario.render(993.5,620,'reversoCarta').disableInteractive();
          mazoOponente.render(222.5,90,'reversoCarta').disableInteractive();
 
-         
- 
          this.renderCartas[1].data.values.cards++;
          this.renderCartas[24].data.values.cards++;
         
-        
-
-         /**
-          * prueba de funcion para mazo (quitar cartas, si no quedan cartas fin de juego)
-          */
+        /**
+        * Se declara una variable numeroCartasUsuario para hacer prueba de quitar cartas de un mazo
+        * se definen un texto interactuable para que si este es interactuado, se baje un valor a la variable
+        * numeroCartasUsuario, si esto ocurre y llega a 0 la variable anterior se da alerta que el juego a terminado
+        */
          var numeroCartasUsuario = 30;
          this.textoMazoUsuario = this.add.text(993.5,620,[numeroCartasUsuario]).setFontSize(13).setColor('#00ff00').setInteractive();
          this.quitarCartasMazo = () => {
              numeroCartasUsuario-=1;
              if(numeroCartasUsuario<=0){
-                console.log("fin de juego");
+                
                 this.textoMazoUsuario.setText(0);
              }else{
                 this.textoMazoUsuario.setText([numeroCartasUsuario]);
              }
              this.verificarEstadoPartida();   
-             console.log(numeroCartasUsuario);
+             
          }
          this.botonQuitarCartaMazo=this.add.text(950,670,['mazo usuario']).setFontSize(13).setColor('#00ff00').setInteractive();
          this.botonQuitarCartaMazo.on('pointerdown',function(){
